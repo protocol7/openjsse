@@ -19,6 +19,11 @@ The public API for OpenJSSE is located in the org.openjsse.javax.net.ssl
 and org.openjsse.java.security.spec packages and is similar to the
 Java SE 11 javax.net.ssl and java.security.spec package APIs. 
 
+--
+### Modifications for QUIC
+- [x] Allow setting, merging, and reading QUIC Transport Parameters
+- [ ] Allow 0-RTT data (TLSv1.3 "early_data").
+
 ----
 ### Code origins and evolution
 
