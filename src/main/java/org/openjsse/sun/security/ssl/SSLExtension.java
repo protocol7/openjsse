@@ -478,7 +478,24 @@ enum SSLExtension implements SSLStringizer {
                                 PreSharedKeyExtension.shOnLoadConsumer,
                                 PreSharedKeyExtension.shOnLoadAbsence,
                                 null, null,
-                                PreSharedKeyExtension.shStringizer);
+                                PreSharedKeyExtension.shStringizer),
+
+    // TLS 1.3 QUIC Transport Parameters defined in RFC draft-ietf-quic-tls
+    CH_QUIC_TRANS_PARAMS    (0xffa5, "quic_transport_parameters",
+                                SSLHandshake.CLIENT_HELLO,
+                                ProtocolVersion.PROTOCOLS_OF_13,
+                                QUICTransParamsExtension.networkProducer,
+                                QUICTransParamsExtension.onLoadConsumer,
+                                null, null, null,
+                                QUICTransParamsExtension.stringizer),
+    SH_QUIC_TRANS_PARAMS    (0xffa5, "quic_transport_parameters",
+                                SSLHandshake.SERVER_HELLO,
+                                ProtocolVersion.PROTOCOLS_OF_13,
+                                QUICTransParamsExtension.networkProducer,
+                                QUICTransParamsExtension.onLoadConsumer,
+                                null, null, null,
+                                QUICTransParamsExtension.stringizer);
+
 
     final int id;
     final SSLHandshake handshakeType;

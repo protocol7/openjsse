@@ -99,6 +99,7 @@ public class SSLParameters extends javax.net.ssl.SSLParameters {
     private boolean enableRetransmissions = true;
     private int maximumPacketSize = 0;
     private String[] applicationProtocols = new String[0];
+    private Map<String, Object> quicTransParams = new HashMap<>();
 
     /**
      * Constructs SSLParameters.
@@ -183,6 +184,27 @@ public class SSLParameters extends javax.net.ssl.SSLParameters {
      */
     public boolean getEnableRetransmissions() {
         return enableRetransmissions;
+    }
+
+    //TODO: javadocs
+    public void setQuicTransParam(String param, long value) {
+        setQuicTransParamObject(param, value);
+    }
+
+    public void setQuicTransParam(String param, byte[] value) {
+        setQuicTransParamObject(param, value);
+    }
+
+    public Map<String, Object> getQuicTransParams() {
+        return quicTransParams;
+    }
+
+    protected void setQuicTransParamObject(String param, Object value) {
+        if (value == null) {
+            quicTransParams.remove(param);
+            return;
+        }
+        quicTransParams.put(param, value);
     }
 
     /**
