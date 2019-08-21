@@ -24,6 +24,8 @@ Java SE 11 javax.net.ssl and java.security.spec package APIs.
 - [x] Allow setting, merging, and reading QUIC Transport Parameters
 - [ ] Allow 0-RTT data (TLSv1.3 "early_data").
 
+View the full diff [here](https://github.com/openjsse/openjsse/compare/master...colinrgodsey:master).
+
 ----
 ### Code origins and evolution
 
