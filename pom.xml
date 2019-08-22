@@ -49,18 +49,23 @@
             <name>Gil Tene</name>
             <url>https://github.com/giltene</url>
         </developer>
+        <developer>
+            <id>colinrgodsey</id>
+            <name>Colin Godsey</name>
+            <url>https://github.com/colinrgodsey</url>
+        </developer>
     </developers>
 
     <scm>
-        <url>scm:git:git://github.com/openjsse/openjsse.git</url>
-        <connection>scm:git:git://github.com/openjsse/openjsse.git</connection>
-        <developerConnection>scm:git:git@github.com:openjsse/openjsse.git</developerConnection>
+        <url>scm:git:git://github.com/colinrgodsey/openjsse.git</url>
+        <connection>scm:git:git://github.com/colinrgodsey/openjsse.git</connection>
+        <developerConnection>scm:git:git@github.com:colinrgodsey/openjsse.git</developerConnection>
         <tag>1.1.5</tag>
     </scm>
 
 
     <issueManagement>
-        <url>https://github.com/openjsse/openjsse/issues</url>
+        <url>https://github.com/colinrgodsey/openjsse/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
     
@@ -443,20 +448,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
