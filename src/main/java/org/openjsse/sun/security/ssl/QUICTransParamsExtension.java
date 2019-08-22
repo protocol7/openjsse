@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSession;
 
 import org.openjsse.sun.security.ssl.SSLExtension.ExtensionConsumer;
@@ -63,11 +62,10 @@ final class QUICTransParamsExtension {
     }
 
     static void copyTransParamsTo(HandshakeContext hc, SSLSession session) {
-        QUICTransParamsSpec spec = (QUICTransParamsSpec) hc.handshakeExtensions.get(SSLExtension.SH_QUIC_TRANS_PARAMS);
-
-        if (spec == null) {
-            spec = (QUICTransParamsSpec) hc.handshakeExtensions.get(SSLExtension.CH_QUIC_TRANS_PARAMS);
-        }
+        QUICTransParamsSpec spec = (QUICTransParamsSpec) hc.handshakeExtensions.get(
+                hc instanceof ServerHandshakeContext ?
+                        SSLExtension.CH_QUIC_TRANS_PARAMS :
+                        SSLExtension.SH_QUIC_TRANS_PARAMS);
 
         if (spec != null) {
             for (HashMap.Entry<TransportParameterId, Object> entry : spec.params.entrySet()) {
@@ -197,10 +195,10 @@ final class QUICTransParamsExtension {
 
             if (context instanceof ServerHandshakeContext) {
                 spec = (QUICTransParamsSpec)
-                        hc.handshakeExtensions.get(SSLExtension.SH_QUIC_TRANS_PARAMS);
+                        hc.handshakeExtensions.get(SSLExtension.CH_QUIC_TRANS_PARAMS);
             } else {
                 spec = (QUICTransParamsSpec)
-                        hc.handshakeExtensions.get(SSLExtension.CH_QUIC_TRANS_PARAMS);
+                        hc.handshakeExtensions.get(SSLExtension.SH_QUIC_TRANS_PARAMS);
             }
 
             if (spec == null) {
@@ -210,9 +208,9 @@ final class QUICTransParamsExtension {
             spec.consume(buffer);
 
             if (context instanceof ServerHandshakeContext) {
-                hc.handshakeExtensions.put(SSLExtension.SH_QUIC_TRANS_PARAMS, spec);
-            } else {
                 hc.handshakeExtensions.put(SSLExtension.CH_QUIC_TRANS_PARAMS, spec);
+            } else {
+                hc.handshakeExtensions.put(SSLExtension.SH_QUIC_TRANS_PARAMS, spec);
             }
         }
     }

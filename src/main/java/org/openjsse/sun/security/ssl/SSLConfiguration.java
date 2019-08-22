@@ -300,6 +300,8 @@ final class SSLConfiguration implements Cloneable {
 
             this.enableRetransmissions = ((org.openjsse.javax.net.ssl.SSLParameters)params).getEnableRetransmissions();
             this.maximumPacketSize = ((org.openjsse.javax.net.ssl.SSLParameters)params).getMaximumPacketSize();
+
+            this.quicTransParams.clear();
             this.quicTransParams.putAll(((org.openjsse.javax.net.ssl.SSLParameters) params).getQuicTransParams());
         }
         this.preferLocalCipherSuites = params.getUseCipherSuitesOrder();

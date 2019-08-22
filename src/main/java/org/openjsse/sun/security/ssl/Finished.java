@@ -1116,6 +1116,8 @@ final class Finished {
                 shc.conContext.finishHandshake();
             }
 
+            QUICTransParamsExtension.copyTransParamsTo(shc, shc.conContext.conSession);
+
             //
             // produce
             if (SSLLogger.isOn && SSLLogger.isOn("ssl,handshake")) {
