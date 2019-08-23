@@ -67,6 +67,7 @@ final class QUICTransParamsExtension {
                         SSLExtension.CH_QUIC_TRANS_PARAMS :
                         SSLExtension.SH_QUIC_TRANS_PARAMS);
 
+        assert session.isValid();
         if (spec != null) {
             for (HashMap.Entry<TransportParameterId, Object> entry : spec.params.entrySet()) {
                 session.putValue(entry.getKey().toString(), entry.getValue());
@@ -125,7 +126,7 @@ final class QUICTransParamsExtension {
         }
 
         byte[] produce() throws IOException {
-            ByteBuffer buffer = ByteBuffer.allocate(2048);
+            ByteBuffer buffer = ByteBuffer.allocate(512);
 
             for (HashMap.Entry<TransportParameterId, Object> entry : params.entrySet()) {
                 if (entry.getKey() == TransportParameterId.disable_migration
