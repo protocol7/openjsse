@@ -205,8 +205,6 @@ final class SSLSessionImpl extends ExtendedSSLSession {
         this.identificationProtocol = hc.sslConfig.identificationProtocol;
         this.boundValues = new ConcurrentHashMap<>();
 
-        QUICTransParamsExtension.copyTransParamsTo(hc, this);
-
         if (SSLLogger.isOn && SSLLogger.isOn("session")) {
              SSLLogger.finest("Session initialized:  " + this);
         }

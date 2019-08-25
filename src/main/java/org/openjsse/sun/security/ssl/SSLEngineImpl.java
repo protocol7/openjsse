@@ -60,6 +60,8 @@ import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
+
+import javax.crypto.SecretKey;
 import org.openjsse.javax.net.ssl.SSLEngine;
 import org.openjsse.javax.net.ssl.SSLEngineResult;
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
@@ -848,6 +850,34 @@ final class SSLEngineImpl extends SSLEngine implements SSLTransport {
     @Override
     public synchronized boolean needUnwrapAgain() {
         return conContext.needUnwrapAgain();
+    }
+
+    public SecretKey getHandshakeReadSecret() {
+        if (conContext.handshakeContext != null) {
+            return conContext.handshakeContext.baseReadSecret;
+        }
+        return null;
+    }
+
+    public SecretKey getHandshakeWriteSecret() {
+        if (conContext.handshakeContext != null) {
+            return conContext.handshakeContext.baseWriteSecret;
+        }
+        return null;
+    }
+
+    public SecretKey getMasterReadSecret() {
+        if (conContext.inputRecord != null) {
+            return conContext.inputRecord.readCipher.baseSecret;
+        }
+        return null;
+    }
+
+    public SecretKey getMasterWriteSecret() {
+        if (conContext.outputRecord != null) {
+            return conContext.outputRecord.writeCipher.baseSecret;
+        }
+        return null;
     }
 
     @Override

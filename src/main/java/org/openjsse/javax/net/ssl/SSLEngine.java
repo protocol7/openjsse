@@ -56,6 +56,7 @@ import java.nio.ReadOnlyBufferException;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
 /**
@@ -447,5 +448,10 @@ public abstract class SSLEngine extends javax.net.ssl.SSLEngine {
      * @return  <code>True</code> if unwrap again is required.
      */
     public abstract boolean needUnwrapAgain();
+
+    public abstract SecretKey getHandshakeReadSecret();
+    public abstract SecretKey getHandshakeWriteSecret();
+    public abstract SecretKey getMasterReadSecret();
+    public abstract SecretKey getMasterWriteSecret();
 
 }
