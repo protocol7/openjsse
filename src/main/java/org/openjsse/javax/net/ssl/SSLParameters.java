@@ -51,6 +51,7 @@
 
 package org.openjsse.javax.net.ssl;
 
+import java.nio.ByteBuffer;
 import java.security.AlgorithmConstraints;
 import java.util.Map;
 import java.util.List;
@@ -99,7 +100,7 @@ public class SSLParameters extends javax.net.ssl.SSLParameters {
     private boolean enableRetransmissions = true;
     private int maximumPacketSize = 0;
     private String[] applicationProtocols = new String[0];
-    private Map<String, Object> quicTransParams = new HashMap<>();
+    private ByteBuffer quicTransParams = null;
 
     /**
      * Constructs SSLParameters.
@@ -186,25 +187,12 @@ public class SSLParameters extends javax.net.ssl.SSLParameters {
         return enableRetransmissions;
     }
 
-    //TODO: javadocs
-    public void setQuicTransParam(String param, long value) {
-        setQuicTransParamObject(param, value);
-    }
-
-    public void setQuicTransParam(String param, byte[] value) {
-        setQuicTransParamObject(param, value);
-    }
-
-    public Map<String, Object> getQuicTransParams() {
+    public ByteBuffer getQUICTransParams() {
         return quicTransParams;
     }
 
-    protected void setQuicTransParamObject(String param, Object value) {
-        if (value == null) {
-            quicTransParams.remove(param);
-            return;
-        }
-        quicTransParams.put(param, value);
+    public void setQUICTransParams(ByteBuffer data) {
+        quicTransParams = data;
     }
 
     /**

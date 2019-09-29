@@ -185,41 +185,6 @@ interface Record {
         }
     }
 
-    /*
-     * Variable Integer types, used by QUIC Transport Parameters extension.
-     */
-    static long getVariableInt(ByteBuffer m) throws IOException {
-        int firstByte = getInt8(m);
-        int exp = firstByte >> 6;
-        long out = firstByte & 0x3F;
-
-        for (int i = 1 << exp ; i > 1 ; i--) {
-            out <<= 8;
-            out |= getInt8(m);
-        }
-
-        return out;
-    }
-
-    static void putVariableInt(ByteBuffer m, long value) throws IOException {
-        if (value < 0) {
-            throw new IllegalArgumentException("Value for VariableInt must be positive: " + value);
-        } else if ((value >> 6) == 0) {
-            putInt8(m, (byte) value);
-        } else if ((value >> 14) == 0) {
-            putInt16(m, ((int) value) | (1 << 14));
-        } else if ((value >> 30) == 0) {
-            putInt32(m, ((int) value) | (2 << 30));
-        } else if ((value >> 62) == 0) {
-            value = value | (3L << 62);
-            putInt32(m, (int) (value & 0xFFFFFFFF));
-            value >>>= 32;
-            putInt32(m, (int) (value & 0xFFFFFFFF));
-        } else {
-            throw new IllegalArgumentException("Value too big for VariableInt: " + value);
-        }
-    }
-
     // Verify that the buffer has sufficient remaining.
     static void verifyLength(
             ByteBuffer m, int len) throws SSLException {

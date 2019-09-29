@@ -51,6 +51,7 @@
 
 package org.openjsse.javax.net.ssl;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import javax.net.ssl.*;
 
@@ -100,4 +101,10 @@ public abstract class ExtendedSSLSession extends javax.net.ssl.ExtendedSSLSessio
     public List<byte[]> getStatusResponses() {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * Returns the QUIC Transport Parameters raw data.
+     * @return The raw transport parameters data.
+     */
+    public abstract ByteBuffer getQUICTransParams();
 }

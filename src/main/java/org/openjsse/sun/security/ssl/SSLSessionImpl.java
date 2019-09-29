@@ -26,6 +26,7 @@ package org.openjsse.sun.security.ssl;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
@@ -106,6 +107,8 @@ final class SSLSessionImpl extends ExtendedSSLSession {
 
     private final Queue<SSLSessionImpl> childSessions =
                                         new ConcurrentLinkedQueue<>();
+
+    ByteBuffer                  quicTransParams;
 
     /*
      * Is the session currently re-established with a session-resumption
@@ -445,6 +448,14 @@ final class SSLSessionImpl extends ExtendedSSLSession {
         return context;
     }
 
+    @Override
+    public ByteBuffer getQUICTransParams() {
+        return quicTransParams;
+    }
+
+    void setQUICTransParams(ByteBuffer data) {
+        quicTransParams = data;
+    }
 
     SessionId getSessionId() {
         return sessionId;
