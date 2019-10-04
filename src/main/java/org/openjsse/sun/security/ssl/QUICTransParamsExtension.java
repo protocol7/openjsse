@@ -2,11 +2,8 @@ package org.openjsse.sun.security.ssl;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
+import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 
 import org.openjsse.sun.security.ssl.SSLExtension.ExtensionConsumer;
@@ -21,15 +18,19 @@ final class QUICTransParamsExtension {
     static final SSLStringizer stringizer =
             new QUICTransParamsStringizer();
 
-    static void copyTransParamsTo(HandshakeContext hc, SSLSession session) {
+    static void copyTransParamsTo(HandshakeContext hc, SSLSession session) throws SSLException {
         QUICTransParamsSpec spec = (QUICTransParamsSpec) hc.handshakeExtensions.get(
                 hc instanceof ServerHandshakeContext ?
                         SSLExtension.CH_QUIC_TRANS_PARAMS :
                         SSLExtension.EE_QUIC_TRANS_PARAMS);
 
-        assert session.isValid();
-        if (spec != null) {
-            ((SSLSessionImpl) session).setQUICTransParams(ByteBuffer.wrap(spec.data).asReadOnlyBuffer());
+        if (spec == null || spec.data == null) {
+            return;
+        } else if (session.isValid()) {
+            ((SSLSessionImpl) session).setQUICTransParams(ByteBuffer.wrap(spec.data.clone()).asReadOnlyBuffer());
+        } else {
+            throw hc.conContext.fatal(Alert.UNEXPECTED_MESSAGE,
+                    "Can not set QUIC transport parameters. Session is invalid or has been resumed.");
         }
     }
 
